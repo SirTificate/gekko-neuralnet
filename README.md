@@ -8,6 +8,9 @@ If you're reading this Mounir, please say hello. I'd like to link your original 
 copy the file(s) from /strategies/ into the strategies folder of your gekko install
 copy the file(s) from /toml/ into the /config/strategies/ folder of your gekko install
 
+Install the module(s) in your gekko folder:
+`npm install convnetjs mathjs`
+
 # Usage / Configuration
 For most USD or BTC pairs you have to normalize the input data. The bot needs input values between 0-1 to work. If the price of your pair is for instance $6.500 USD, set the `scale` parameter to 10.000.
 

@@ -74,7 +74,7 @@ var strategy = {
     if(this.predictionCount > this.settings.min_predictions)
     {
       let prediction = this.predictCandle();
-      let currentPrice = candle.close;
+      let currentPrice = candle.close / this.settings.scale;
       let meanp = math.mean(prediction, currentPrice);
       let meanAlpha = (meanp - currentPrice) / currentPrice * 100;
 

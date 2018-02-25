@@ -1,6 +1,9 @@
 # gekko-neuralnet
 Neural network strategy for Gekko
 
+This strategy was inspired from Mounir's strategy, found on the Gekko Discord channel. 
+If you're reading this Mounir, please say hello. I'd like to link your original source.
+
 # Install
 copy the file(s) from /strategies/ into the strategies folder of your gekko install
 copy the file(s) from /toml/ into the /config/strategies/ folder of your gekko install
@@ -37,5 +40,7 @@ min_predictions = 1000
 If this strategy is useful for you and generates profits. Buy me a coffee, or two:
  
 ETH 0x40ddba96695bc040ccbe34b4cfa3a7ae8f225583
+
 BTC 1AigkGB4KzzRVmDDxwUxt8EaHRDbtpLNrH
+
 NANO xrb_1iy9ztp485o5a5kumcbazz7178hqmzgcjwbesf73owi7zceaac6jrcgk3w9b

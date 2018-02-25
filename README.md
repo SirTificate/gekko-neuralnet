@@ -8,7 +8,10 @@ copy the file(s) from /toml/ into the /config/strategies/ folder of your gekko i
 # Usage / Configuration
 For most USD or BTC pairs you have to normalize the input data. The bot needs input values between 0-1 to work. If the price of your pair is for instance $6.500 USD, set the `scale` parameter to 10.000.
 
- // the treshold for buying into a currency. e.g.: The predicted price is 1% above the current candle.close
+```javascript
+
+// the treshold for buying into a currency. e.g.: The predicted price is 1% above the current candle.close
+
 threshold_buy = 1.00
 
 // the treshold for selling into a currency. e.g.: The predicted price is 1% under the current candle.close
@@ -29,7 +32,7 @@ decay = 0.01
 
 //minimum number of prictions until the network is considered 'trained'. History size should be equal
 min_predictions = 1000
-
+```
 
 If this strategy is useful for you and generates profits. Buy me a coffee, or two:
  

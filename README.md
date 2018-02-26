@@ -12,7 +12,7 @@ Install the module(s) in your gekko folder:
 `npm install convnetjs mathjs`
 
 # Usage / Configuration
-For most USD or BTC pairs you have to normalize the input data. The bot needs input values between 0-1 to work. If the price of your pair is for instance $6.500 USD, set the `scale` parameter to 10.000.
+For most USD or BTC pairs you have to normalize the input data. The neural network needs input values between 0-1 to work. If the price of your pair is for instance $6.500 USD, set the `scale` parameter to 10.000.
 
 ```javascript
 
@@ -20,7 +20,7 @@ For most USD or BTC pairs you have to normalize the input data. The bot needs in
 
 threshold_buy = 1.00
 
-// the treshold for selling into a currency. e.g.: The predicted price is 1% under the current candle.close
+// the treshold for selling a currency. e.g.: The predicted price is 1% under the current candle.close
 threshold_sell = -1.00
 
 // The length of the candle.close price buffer. It's used to train the network on every update cycle.

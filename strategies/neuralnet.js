@@ -63,7 +63,7 @@ var strategy = {
   },
 
   setNormalizeFactor : function(candle) {
-    this.scale = Math.pow(10,candle.high.toString().length+1);
+    this.scale = Math.pow(10,Math.trunc(candle.high).toString().length+1);
     log.debug('Set normalization factor to',this.scale);
   },
 

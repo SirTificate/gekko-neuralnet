@@ -11,8 +11,8 @@ var strategy = {
 
   priceBuffer : [],
   predictionCount : 0,
-  neurons : 0,
   batchsize : 5,
+  layer_neurons : 0,
   layer_activation : 'tanh',
   scale : 1,
   prevAction : 'wait',
@@ -27,7 +27,7 @@ var strategy = {
 
     let layers = [
       {type:'input', out_sx:1, out_sy:1, out_depth: 1},
-      {type:'fc', num_neurons: this.neurons, activation: this.activation},
+      {type:'fc', num_neurons: this.layer_neurons, activation: this.layer_activation},
       {type:'regression', num_neurons: 1}
     ];
 

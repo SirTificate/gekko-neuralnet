@@ -12,7 +12,6 @@ Install the module(s) in your gekko folder:
 `npm install convnetjs mathjs`
 
 # Usage / Configuration
-For most USD or BTC pairs you have to normalize the input data. The neural network needs input values between 0-1 to work. If the price of your pair is for instance $6.500 USD, set the `scale` parameter to 10.000.
 
 ```javascript
 
@@ -29,8 +28,6 @@ price_buffer_len = 100
 // The learning rate of net
 learning_rate = 0.01
 
-// Normalization factor
-scale = 1
 
 // learning speed
 momentum = 0.9
@@ -38,6 +35,13 @@ decay = 0.01
 
 //minimum number of prictions until the network is considered 'trained'. History size should be equal
 min_predictions = 1000
+
+//enables stoploss function
+stoploss_enabled = false
+
+//trigger stoploss 5% under last buyprice
+stoploss_threshold = 0.95
+
 ```
 
 If this strategy is useful for you and generates profits. Buy me a coffee, or two:

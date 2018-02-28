@@ -14,10 +14,13 @@ var strategy = {
   neurons : 0,
   batchsize : 5,
   layer_activation : 'tanh',
+  scale : 1,
+  prevAction : 'wait',
+  prevPrice : 0,
+  stoplossCounter : 0,
 
+  // init the strategy
   init : function() {
-
-    this.priceBuffer = [];
 
     this.name = 'Neural Network';
     this.requiredHistory = config.tradingAdvisor.historySize;
@@ -38,6 +41,11 @@ var strategy = {
       l2_decay: this.settings.decay
     });
 
+    this.addIndicator('stoploss', 'StopLoss', {
+      threshold : this.settings.stoploss_threshold
+    });
+
+
   },
 
   learn : function () {
@@ -54,14 +62,31 @@ var strategy = {
     }
   },
 
+  setNormalizeFactor : function(candle) {
+    this.scale = Math.pow(10,candle.high.toString().length+1);
+    log.debug('Set normalization factor to',this.scale);
+  },
+
   update : function(candle)
   {
-    this.priceBuffer.push(candle.close / this.settings.scale );
+    if (1 === this.scale && 1 < candle.high && 0 === this.predictionCount) this.setNormalizeFactor(candle);
+
+    this.priceBuffer.push(candle.close / this.scale );
     if (2 > this.priceBuffer.length) return;
 
     for (i=0;i<3;++i) this.learn();
 
     while (this.settings.price_buffer_len < this.priceBuffer.length) this.priceBuffer.shift();
+  },
+
+  onTrade: function(event) {
+
+    if ('buy' === event.action) {
+      this.indicators.stoploss.long(event.price);
+    }
+    this.prevAction = event.action;
+    this.prevPrice = event.price;
+
   },
 
   predictCandle : function() {
@@ -73,20 +98,30 @@ var strategy = {
   check : function(candle) {
     if(this.predictionCount > this.settings.min_predictions)
     {
+      if (
+          'buy' === this.prevAction
+          && this.settings.stoploss_enabled
+          && 'stoploss' === this.indicators.stoploss.action
+      ) {
+        this.stoplossCounter++;
+        log.debug('>>>>>>>>>> STOPLOSS triggered <<<<<<<<<<');
+        this.advice('short');
+      }
+
       let prediction = this.predictCandle();
-      let currentPrice = candle.close / this.settings.scale;
+      let currentPrice = candle.close;
       let meanp = math.mean(prediction, currentPrice);
       let meanAlpha = (meanp - currentPrice) / currentPrice * 100;
 
       let signal = meanp < currentPrice;
-      if (signal === false  && meanAlpha> this.settings.threshold_buy )
+      if ('buy' !== this.prevAction && signal === false  && meanAlpha> this.settings.threshold_buy )
       {
 
         log.debug("Buy - Predicted variation: ",meanAlpha);
         return this.advice('long');
       }
       else if
-      (signal === true && meanAlpha < this.settings.threshold_sell)
+      ('sell' !== this.prevAction && signal === true && meanAlpha < this.settings.threshold_sell)
       {
 
         log.debug("Sell - Predicted variation: ",meanAlpha);
@@ -95,6 +130,10 @@ var strategy = {
       }
 
     }
+  },
+
+  end : function() {
+    log.debug('Triggered stoploss',this.stoplossCounter,'times');
   }
 
 

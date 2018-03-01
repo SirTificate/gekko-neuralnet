@@ -108,7 +108,7 @@ var strategy = {
         this.advice('short');
       }
 
-      let prediction = this.predictCandle();
+      let prediction = this.predictCandle() * this.scale;
       let currentPrice = candle.close;
       let meanp = math.mean(prediction, currentPrice);
       let meanAlpha = (meanp - currentPrice) / currentPrice * 100;

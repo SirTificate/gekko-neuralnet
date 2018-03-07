@@ -29,7 +29,7 @@ var strategy = {
 
   // if you want the bot to hodl instead of selling during a small dip
   // use the hodle_threshold. e.g. 0.95 means the bot won't sell
-  // when unless the price drops below a 5% threshold of the last buy price (this.privPrice)
+  // unless the price drops 5% below the last buy price (this.privPrice)
   hodle_threshold : 1,
 
   // init the strategy

@@ -70,8 +70,7 @@ var strategy = {
       let current_price = [this.priceBuffer[i + 1]];
       let vol = new convnetjs.Vol(data);
       this.trainer.train(vol, current_price);
-      this.nn.forward(vol);
-      this.predictionCount++;
+       this.predictionCount++;
     }
   },
 

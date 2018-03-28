@@ -31,6 +31,8 @@ price_buffer_len = 100
 // The learning rate of net
 learning_rate = 0.01
 
+// when the price falls up to 4% and the strat indicates to go short, hodl!
+hodle_threshold = 0.96
 
 // learning speed
 momentum = 0.9

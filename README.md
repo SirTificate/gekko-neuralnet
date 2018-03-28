@@ -4,6 +4,9 @@ Neural network strategy for Gekko
 This strategy was inspired from Mounir's strategy, found on the Gekko Discord channel. 
 For reference, that's the original work: https://github.com/cloggy45/Gekko-Bot-Resources/blob/master/gekko/strategies/mounirs-ga-version-2.js
 
+# Version / Changelog
+2018-03-28 - Fixed SMMA input. Cleaned the training method
+
 # Install
 copy the file(s) from /strategies/ into the strategies folder of your gekko install
 copy the file(s) from /toml/ into the /config/strategies/ folder of your gekko install

@@ -29,7 +29,7 @@ var strategy = {
 
   // if you want the bot to hodl instead of selling during a small dip
   // use the hodle_threshold. e.g. 0.95 means the bot won't sell
-  // unless the price drops 5% below the last buy price (this.privPrice)
+  // when unless the price drops below a 5% threshold of the last buy price (this.privPrice)
   hodle_threshold : 1,
 
   // init the strategy
@@ -65,12 +65,12 @@ var strategy = {
   },
 
   learn : function () {
-    for (let i = 0; i < this.priceBuffer.length - 1; i++) {
-      let data = [this.priceBuffer[i]];
-      let current_price = [this.priceBuffer[i + 1]];
-      let vol = new convnetjs.Vol(data);
+    for (let i = 0; i < this.priceBuffer.length; i++) {
+      let current_price = [this.priceBuffer[i]];
+      let vol = new convnetjs.Vol([Math.random()]);
       this.trainer.train(vol, current_price);
-       this.predictionCount++;
+      this.nn.forward(vol);
+      this.predictionCount++;
     }
   },
 
@@ -82,7 +82,7 @@ var strategy = {
   update : function(candle)
   {
     // play with the candle values to finetune this
-    this.SMMA.update( (candle.high + candle.close + candle.low + candle.vwp) /4);
+    this.SMMA.update( candle.close );
     let smmaFast = this.SMMA.result;
 
     if (1 === this.scale && 1 < candle.high && 0 === this.predictionCount) this.setNormalizeFactor(candle);
@@ -90,7 +90,7 @@ var strategy = {
     this.priceBuffer.push(smmaFast / this.scale );
     if (2 > this.priceBuffer.length) return;
 
-     for (i=0;i<3;++i)
+     for (tweakme=0;tweakme<5;++tweakme)
       this.learn();
 
     while (this.settings.price_buffer_len < this.priceBuffer.length) this.priceBuffer.shift();

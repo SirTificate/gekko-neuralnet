@@ -5,6 +5,7 @@ This strategy was inspired from Mounir's strategy, found on the Gekko Discord ch
 For reference, that's the original work: https://github.com/cloggy45/Gekko-Bot-Resources/blob/master/gekko/strategies/mounirs-ga-version-2.js
 
 # Version / Changelog
+2018-04-03 - renamed hodle_threshold variable to hodl_threshold
 2018-03-28 - Fixed SMMA input. Cleaned the training method
 
 # Install
@@ -32,7 +33,7 @@ price_buffer_len = 100
 learning_rate = 0.01
 
 // when the price falls up to 4% and the strat indicates to go short, hodl!
-hodle_threshold = 0.96
+hodl_threshold = 0.96
 
 // learning speed
 momentum = 0.9

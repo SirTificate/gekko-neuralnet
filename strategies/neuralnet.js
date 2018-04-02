@@ -28,9 +28,9 @@ var strategy = {
   stoplossCounter : 0,
 
   // if you want the bot to hodl instead of selling during a small dip
-  // use the hodle_threshold. e.g. 0.95 means the bot won't sell
+  // use the hodl_threshold. e.g. 0.95 means the bot won't sell
   // when unless the price drops below a 5% threshold of the last buy price (this.privPrice)
-  hodle_threshold : 1,
+  hodl_threshold : 1,
 
   // init the strategy
   init : function() {
@@ -61,7 +61,7 @@ var strategy = {
       threshold : this.settings.stoploss_threshold
     });
 
-    this.hodle_threshold = this.settings.hodle_threshold || 1;
+    this.hodl_threshold = this.settings.hodl_threshold || 1;
   },
 
   learn : function () {
@@ -134,8 +134,8 @@ var strategy = {
 
 
       // sell only if the price is higher than the buying price or if the price drops below the threshold
-      // a hodle_threshold of 1 will always sell when the NN predicts a drop of the price. play with it!
-      let signalSell = candle.close > this.prevPrice || candle.close < (this.prevPrice*this.hodle_threshold);
+      // a hodl_threshold of 1 will always sell when the NN predicts a drop of the price. play with it!
+      let signalSell = candle.close > this.prevPrice || candle.close < (this.prevPrice*this.hodl_threshold);
 
       let signal = meanp < currentPrice;
       if ('buy' !== this.prevAction && signal === false  && meanAlpha> this.settings.threshold_buy )

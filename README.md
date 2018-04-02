@@ -5,8 +5,8 @@ This strategy was inspired from Mounir's strategy, found on the Gekko Discord ch
 For reference, that's the original work: https://github.com/cloggy45/Gekko-Bot-Resources/blob/master/gekko/strategies/mounirs-ga-version-2.js
 
 # Version / Changelog
-2018-04-03 - renamed hodle_threshold variable to hodl_threshold
-2018-03-28 - Fixed SMMA input. Cleaned the training method
+- 2018-04-03 - renamed hodle_threshold variable to hodl_threshold
+- 2018-03-28 - Fixed SMMA input. Cleaned the training method
 
 # Install
 copy the file(s) from /strategies/ into the strategies folder of your gekko install

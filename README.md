@@ -1,8 +1,8 @@
 # gekko-neuralnet
 Neural network strategy for Gekko
 
-This strategy was inspired from Mounir's strategy, found on the Gekko Discord channel. 
-For reference, that's the original work: https://github.com/cloggy45/Gekko-Bot-Resources/blob/master/gekko/strategies/mounirs-ga-version-2.js
+This strategy was inspired from MoonGem's Zenbot code.
+For reference, that's the original work: https://github.com/DeviaVir/zenbot/blob/f1a1f512293a65d4cd931deba34644d7e24f6e41/extensions/strategies/neural/strategy.js
 
 # Version / Changelog
 - 2018-04-03 - renamed hodle_threshold variable to hodl_threshold

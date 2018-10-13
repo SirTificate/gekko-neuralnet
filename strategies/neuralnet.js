@@ -1,7 +1,6 @@
 var convnetjs = require('convnetjs');
 var math = require('mathjs');
 
-
 var log = require('../core/log.js');
 
 var config = require ('../core/util.js').getConfig();
@@ -95,19 +94,7 @@ var strategy = {
 
     while (this.settings.price_buffer_len < this.priceBuffer.length) this.priceBuffer.shift();
   },
-
-  onTrade: function(event) {
-
-    if ('buy' === event.action) {
-      this.indicators.stoploss.long(event.price);
-    }
-    // store the previous action (buy/sell)
-    this.prevAction = event.action;
-    // store the price of the previous trade
-    this.prevPrice = event.price;
-
-  },
-
+  
   predictCandle : function() {
     let vol = new convnetjs.Vol(this.priceBuffer);
     let prediction = this.nn.forward(vol);
@@ -125,13 +112,16 @@ var strategy = {
         this.stoplossCounter++;
         log.debug('>>>>>>>>>> STOPLOSS triggered <<<<<<<<<<');
         this.advice('short');
+        // store the previous action (buy/sell)
+        this.prevAction = event.action;
+        // store the price of the previous trade
+        this.prevPrice = event.price;
       }
 
       let prediction = this.predictCandle() * this.scale;
       let currentPrice = candle.close;
       let meanp = math.mean(prediction, currentPrice);
       let meanAlpha = (meanp - currentPrice) / currentPrice * 100;
-
 
       // sell only if the price is higher than the buying price or if the price drops below the threshold
       // a hodl_threshold of 1 will always sell when the NN predicts a drop of the price. play with it!
@@ -140,19 +130,25 @@ var strategy = {
       let signal = meanp < currentPrice;
       if ('buy' !== this.prevAction && signal === false  && meanAlpha> this.settings.threshold_buy )
       {
-
         log.debug("Buy - Predicted variation: ",meanAlpha);
         return this.advice('long');
+        // set the stop loss
+        this.indicators.stoploss.long(event.price);
+        // store the previous action (buy/sell)
+        this.prevAction = event.action;
+        // store the price of the previous trade
+        this.prevPrice = event.price;
       }
       else if
       ('sell' !== this.prevAction && signal === true && meanAlpha < this.settings.threshold_sell && signalSell)
       {
-
         log.debug("Sell - Predicted variation: ",meanAlpha);
         return this.advice('short');
-
+        // store the previous action (buy/sell)
+        this.prevAction = event.action;
+        // store the price of the previous trade
+        this.prevPrice = event.price;
       }
-
     }
   },
 

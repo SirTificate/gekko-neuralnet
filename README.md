@@ -10,6 +10,7 @@ For reference, that's the original work: https://github.com/cloggy45/Gekko-Bot-R
 
 # Install
 copy the file(s) from /strategies/ into the strategies folder of your gekko install
+
 copy the file(s) from /toml/ into the /config/strategies/ folder of your gekko install
 
 Install the modules in your gekko folder:
